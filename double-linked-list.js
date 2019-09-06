@@ -47,6 +47,7 @@ class DoublyLinkedList {
 
   remove(node) {
     // Write your code here.
+    node.prev
   }
 
   containsNodeWithValue(value) {
