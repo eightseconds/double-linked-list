@@ -5,7 +5,7 @@ class DoublyLinkedList {
   }
 
   setHead(node) {
-    // Write your code here.
+    
     if (this.head === null) {
         this.head = node;
         this.tail = node;
@@ -16,7 +16,7 @@ class DoublyLinkedList {
 }
 
   setTail(node) {
-    // Write your code here.
+    
     if (this.tail === null) {
         this.setHead(node);
         return;
@@ -26,40 +26,87 @@ class DoublyLinkedList {
   }
 
   insertBefore(node, nodeToInsert) {
-    // Write your code here.
+
     if (nodeToInsert === this.head && nodeToInsert === this.tail) return;
-    this.remove
+    
+
+    this.remove(nodeToInsert);
+    nodeToInsert.prev = node.prev;
+    nodeToInsert.next = node;
+
+    if (node.prev === null) {
+      this.head = nodeToInsert;
+    } else {
+      node.prev.next = nodeToInsert;
+    }
+
+    node.prev = nodeToInsert;
   }
 
   insertAfter(node, nodeToInsert) {
-    // Write your code here.
-    node.next = nodeToInsert;
+    
+
+    if (nodeToInsert === this.head && nodeToInsert === this.tail) return;
+    this.remove(nodeToInsert);
+
     nodeToInsert.prev = node;
+    nodeToInsert.next = node.next;
+
+    if (node.next === null) {
+      this.tail = nodeToInsert;
+    } else {
+      node.next.prev = nodeToInsert
+    }
+
+    node.next = nodeToInsert;
   }
 
   insertAtPosition(position, nodeToInsert) {
-    // Write your code here.
+    if (position === 1) {
+      this.setHead(nodeToInsert);
+      return;
+    }
+
+    let node = this.head;
+    let currentPosition = 1;
+
+    while (node !== null && currentPosition++ !== position) node = node.next;
+    if (node !== null) {
+      this.insertBefore(node, nodeToInsert);
+    } else {
+      this.setTail(nodeToInsert)
+    }
   }
 
   removeNodesWithValue(value) {
-    // Write your code here.
+    let node = this.head;
+    while (node !== null) {
+      const nodeToRemove = node;
+      node = node.next
+      if (nodeToRemove.value === value) {
+        this.remove(nodeToRemove);
+      }
+    }
   }
 
   remove(node) {
-    // Write your code here.
-    node.prev
+    
+    if (node === this.head) this.head === this.head.next;
+    if (node === this.tail) this.tail = this.tail.prev;
+
+    if (node.prev !== null) node.prev.next = node.next;
+    if (node.next !== null) node.next.prev = node.prev;
+
+    node.prev = null;
+    node.next = null;
   }
 
   containsNodeWithValue(value) {
-    // Write your code here.
-    node = this.head;
+    
+    let node = this.head;
     while (node !== null && node.value !== value) {
         node = node.next;
+        return node !== null;
     }
-
-    return true;
   }
 }
-
-// Do not edit the line below.
-exports.DoublyLinkedList = DoublyLinkedList;
